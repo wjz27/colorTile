@@ -1,6 +1,8 @@
 # colorTile
 
-Find the tile among many with similar color.
+An easy game, try your best to find the tile with different color among many with similar color.
+
+![](./png/screenShot.png)
 
 ## Issues left:
 + User performance:
