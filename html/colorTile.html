@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Color Tile!</title>
+  </head>
+  <body>
+    <h1>Color Tile</h1>
+    <p>Try find the tile which has different color from  others.
+</p>
+
+    <button onclick="start()">Start</button>
+
+
+
+
+
+    <canvas id="myCanvas" width="200" height="200"
+            style="border:5px yellow solid"></canvas>
+
+    <script type="text/javascript">
+
+    var c=document.getElementById("myCanvas");
+    var canvasSize = 200;
+    c.width = canvasSize;
+    c.height = canvasSize;
+    var cxt = c.getContext("2d");
+    var frameSize = canvasSize;
+    var stageNumber = 2;
+    var t_row = 0;
+    var t_col = 0;
+
+    cLeft = c.offsetLeft,
+    cTop = c.offsetTop,
+    c.addEventListener('click',
+        function ( event ) {
+            var x = event.offsetX; //- c.offsetLeft;
+            var y = event.offsetY; //- c.offsetTop;
+            debugger;
+            if ( Math.floor( x/(frameSize/stageNumber) ) == t_col && Math.floor( y/(frameSize/stageNumber) ) == t_row )
+            {
+                nextStage();
+            }
+         },
+         false);
+
+    function genColor()
+    {
+        var r = Math.floor( Math.random() * 256 );
+        var g = Math.floor( Math.random() * 256 );
+        var b = Math.floor( Math.random() * 256 );
+          return [ ["rgba(",r,",",g,",",b,",0.5",")"].join(""), ["rgba(",r,",",g,",",b,",0.3",")"].join("") ];
+    }
+
+    function setup()
+    {
+        cxt.clearRect(0, 0, c.width, c.height);
+        t_row = Math.floor( ( Math.random() * stageNumber ) );
+        //alert( t_row );
+        t_col = Math.floor( ( Math.random() * stageNumber ) );
+        //alert( t_row, t_col );
+
+        var colors = genColor();
+        cxt.fillStyle = colors[0];
+        var tColor = colors[1];
+        var recSize = frameSize/stageNumber;
+        //var delta = recSize * 0.1;
+        for ( var row = 0; row < stageNumber; row++ ) {
+            for ( var col = 0; col < stageNumber; col++ ) {
+                //debugger;
+                cxt.fillRect(
+                    col * recSize,
+                    row * recSize,
+                    recSize*0.9,
+                    recSize*0.9 );
+            };
+        };
+        cxt.fillStyle = colors[1];
+        cxt.fillRect(
+                    t_col * recSize,
+                    t_row * recSize,
+                    recSize*0.9,
+                    recSize*0.9 );
+    }
+
+    function start()
+    {
+        stageNumber = 2;
+        setup();
+    }
+
+    function nextStage()
+    {
+        stageNumber += 1;
+        setup();
+    }
+
+    </script>
+  </body>
+</html>
